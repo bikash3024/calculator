@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Roboto:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', 'Roboto', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        :root {
+            --btn-background: rgb(133, 133, 133);
+            --body-background: rgb(116, 116, 116);
+            --calculator-background: rgb(22, 22, 22);
+            --result-background: rgb(146, 146, 146);
+        }
+
+        body {
+            background-color: var(--body-background);
+            text-align: center;
+            padding: 15vh 0 0 0;
+
+        }
+
+        #mainContainer {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            border: 0.5px solid gray;
+            padding: 10px;
+            border-radius: 15px;
+            background-color: var(--calculator-background);
+        }
+
+        #resultDisplay {
+            width: 100%;
+            padding: 1rem 1rem 1rem 0;
+            text-align: right;
+            background-color: var(--result-background);
+            box-shadow: inset 2px 3px 5px 0 rgb(0 0 0 / 70%);
+            border-radius: 15px;
+            margin: 10px 0 10px 0;
+            color: #fff;
+        }
+
+        #operationsContainer {
+            width: 100%;
+            height: 70%;
+            margin: 30px auto 0 auto;
+            display: grid;
+            grid-gap: 10px 10px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .btn {
+            border-radius: 50%;
+            background-color: var(--btn-background);
+            color: #fff;
+            padding: 1rem 0;
+
+        }
+        .equalBtn{
+            grid-column: 3/5;
+            border-radius: 2.3rem;
+        }
+
+        #footer {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            color: #fff;
+            margin: 0 0 25px 25px;
+            text-align: left;
+            left: 0;
+        }
