@@ -8,33 +8,355 @@
 
 <body>
     <div id="mainContainer">
-        <div id="resultDisplay">0</div>
+        <div id="resultDisplay">&nbsp;</div>
         <div id="operationsContainer">
             <div class="btn" id="AC">AC</div>
             <div class="btn" id="clear">Clear</div>
-            <div class="btn" id="percent">%</div>
-            <div class="btn" id="divide">÷</div>
-            <div class="btn" id="seven">7</div>
-            <div class="btn" id="eight">8</div>
-            <div class="btn" id="nine">9</div>
-            <div class="btn" id="multiply">X</div>
-            <div class="btn" id="four">4</div>
-            <div class="btn" id="five">5</div>
-            <div class="btn" id="six">6</div>
-            <div class="btn" id="subtract">-</div>
-            <div class="btn" id="one">1</div>
-            <div class="btn" id="two">2</div>
-            <div class="btn" id="three">3</div>
-            <div class="btn" id="add">+</div>
-            <div class="btn" id="zero">0</div>
+            <div class="btn operator" id="percent">%</div>
+            <div class="btn operator" id="divide">÷</div>
+            <div class="btn number" id="seven">7</div>
+            <div class="btn number" id="eight">8</div>
+            <div class="btn number" id="nine">9</div>
+            <div class="btn operator" id="multiply">X</div>
+            <div class="btn number" id="four">4</div>
+            <div class="btn number" id="five">5</div>
+            <div class="btn number" id="six">6</div>
+            <div class="btn operator" id="subtract">-</div>
+            <div class="btn number" id="one">1</div>
+            <div class="btn number" id="two">2</div>
+            <div class="btn number" id="three">3</div>
+            <div class="btn operator" id="add">+</div>
+            <div class="btn number" id="zero">0</div>
             <div class="btn" id="decimal">.</div>
-            <div class="btn equalBtn" id="equals">=</div>
+            <div class="btn equalBtn " id="equals">=</div>
         </div>
         <div id="footer">bikash3024</div>
 
     </div>
 
 </body>
-<script src="jas.js"></script>
+<script>
+    const resultScreen = document.querySelector("#resultDisplay");
+    let firstNo = null;
+    let secondNo = null;
+    let operator = null;
+    let result = null;
+    let displayValue = null;
+
+    const refreshResultScreen = function () {
+        if (displayValue == null) {
+            resultScreen.textContent = 0;
+        }
+        else {
+            resultScreen.textContent = displayValue;
+        }
+    }
+
+    const add = function () {
+
+        if (firstNo == null && secondNo == null && operator == null) { // user has opened the calculator and pressed + without numbers so do nothing
+            return;
+        }
+
+        if (firstNo != null && secondNo == null) {  // Only first number is present, second number is null either because user didnt enter or because it became null after calculation.
+
+            operator = "+";
+            displayValue = `${firstNo} +`;
+            refreshResultScreen();
+
+        }
+        else {                                                  // This condition is for when firsNO,secondNO and operator are all present. For eg 10 + 3 is on the screen. 
+            if (operator == "+") {                                // If user-clicked operator and current operator value are same
+                displayValue = `${result = firstNo + secondNo}` + " +";
+                refreshResultScreen();
+                firstNo = result;
+                secondNo = null;
+            }
+            else {                                         // This condition happens when previous operator is different from new operator . passing + as the new operator in operatewithoperator()
+                operateWithOperator(operator, "+");
+                operator = "+";
+                firstNo = result;
+                secondNo = null;
+            }
+        }
+    };
+
+    // Above logic used in add functions is applied to all the below operator functions
+
+    const subtract = function () {
+
+        if (firstNo == null && secondNo == null && operator == null) {
+            return;
+        }
+
+        if (firstNo != null && secondNo == null) {
+
+            operator = "-";
+            displayValue = `${firstNo} -`;
+            refreshResultScreen();
+
+        }
+        else {
+            if (operator == "-") {
+                displayValue = `${result = firstNo - secondNo}` + " -";
+                refreshResultScreen();
+                firstNo = result;
+                secondNo = null;
+            }
+            else {
+                operateWithOperator(operator, "-");
+                operator = "-";
+                firstNo = result;
+                secondNo = null;
+            }
+        }
+    };
+
+    // const sumofArray = function (arr) {
+    //     let totalSum = arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    //     return totalSum;
+    // };
+
+    const multiply = function () {  // For multiply I have used alphabet 'X' only to display on screen, logically * operator is used everywhere
+
+        if (firstNo == null && secondNo == null && operator == null) {
+            return;
+        }
+
+        if (firstNo != null && secondNo == null) {
+
+            operator = "*";
+            displayValue = `${firstNo} X`;
+            refreshResultScreen();
+
+        }
+        else {
+            if (operator == "*") {
+                displayValue = `${result = firstNo * secondNo}` + " X";
+                refreshResultScreen();
+                firstNo = result;
+                secondNo = null;
+            }
+            else {
+                operateWithOperator(operator, "*");
+                operator = "*";
+                firstNo = result;
+                secondNo = null;
+            }
+        }
+    };
+
+
+    const divide = function () { // ÷ symbol is used for displaying but logically / operator is used everywhere else
+
+        if (firstNo == null && secondNo == null && operator == null) {
+            return;
+        }
+
+        if (firstNo != null && secondNo == null) {
+
+            operator = "/";
+            displayValue = `${firstNo} ÷`;
+            refreshResultScreen();
+
+
+        }
+        else {
+            if (secondNo == 0) {
+                displayValue = 'Cannot divide by zero';
+                refreshResultScreen();
+                return;
+            }
+            if (operator == "/") {
+                displayValue = `${result = firstNo / secondNo}` + " ÷";
+                refreshResultScreen();
+                firstNo = result;
+                secondNo = null;
+            }
+            else {
+                operateWithOperator(operator, "/");
+                operator = "/";
+                firstNo = result;
+                secondNo = null;
+            }
+        }
+    }
+
+    // const factorial = function (a) {
+    //     if (a == 0 || a == 1) {
+    //         return 1;
+    //     }
+    //     let fact = 1
+    //     for (let i = a; i >= 1; i--) {
+    //         fact *= i;
+    //     }
+    //     return fact;
+    // };
+
+    const operateWithOperator = function (previousOperator, newOperator) {      //When there is change of operator we are calculting the result with the previous operator and also displaying the new operator.
+
+        if (previousOperator == "+") {
+            displayValue = `${result = firstNo + secondNo} ${newOperator} `;
+            refreshResultScreen();
+        }
+        else if (previousOperator == "-") {
+            displayValue = `${result = firstNo - secondNo} ${newOperator} `;
+            refreshResultScreen();
+        }
+        else if (previousOperator == "*") {
+            displayValue = `${result = firstNo * secondNo} ${newOperator} `;
+            refreshResultScreen();
+        }
+        else if (previousOperator == "/") {
+            if (secondNo == 0) {
+                displayValue = "Cannot divide by 0";
+                refreshResultScreen();
+                return;
+            }
+            displayValue = `${result = firstNo / secondNo} ${newOperator} `;
+            refreshResultScreen();
+        }
+        else if (previousOperator == "^") {
+            return Math.pow(a, b);
+        }
+        else {
+            return;
+        }
+
+    }
+
+    const simpleOperate = function () {
+
+        if (operator == "+") {
+            return firstNo + secondNo;
+        }
+        else if (operator == "-") {
+            return firstNo - secondNo;
+        }
+        else if (operator == "*") {
+            return firstNo * secondNo;
+        }
+        else if (operator == "/") {
+            if (secondNo == 0) {
+                return "Cannot divide by 0";
+            }
+            return firstNo / secondNo;
+        }
+        else if (operator == "^") {
+            return Math.pow(firstNo, secondNo);
+        }
+        else {
+            return;
+        }
+
+    }
+
+
+
+    const operate = function (e) {                      // call back function for operator buttons clicked, this will trigger the requied operator function.
+        // console.log("operate triggerd")
+        let localOperator = e.target.innerHTML;       //have given localOperator to differentiate from the global operator variable
+        // console.log(localOperator);
+        if (localOperator == "+") {
+            add();
+        }
+        else if (localOperator == "-") {
+            subtract();
+        }
+        else if (localOperator == "X") {
+            multiply();
+        }
+        else if (localOperator == "÷") {
+            divide();
+        }
+        else if (localOperator == "^") {
+            return Math.pow(a, b);
+        }
+        else {
+            return;
+        }
+    }
+
+    const enterNumbers = function (e) {
+        if (firstNo == null) {        // user has never entered any number 
+            firstNo = parseInt(e.target.innerHTML);
+            displayValue = firstNo;
+            refreshResultScreen();
+        }
+        else if (firstNo != null && operator == null) {  // User has entered a number but no operator so it we will keep appending the digit entered. For eg if user entered 7 and enters 6 we will append it and first number will be 76
+
+            firstNo = firstNo * 10 + parseInt(e.target.innerHTML);
+            displayValue = firstNo;
+            refreshResultScreen();
+        }
+        else if (firstNo != null && operator != null) {  //User has entered first number and the operator but second number is not entered yet.. so similar to first number we are inputting second number.
+            if (secondNo == null) {
+                secondNo = parseInt(e.target.innerHTML);
+                displayValue = firstNo + ` ${operator} ` + secondNo;
+                refreshResultScreen();
+            }
+            else if (secondNo != null) {
+                secondNo = secondNo * 10 + parseInt(e.target.innerHTML);
+                displayValue = firstNo + ` ${operator} ` + secondNo;
+                refreshResultScreen();
+            }
+        }
+
+    }
+
+    const numberButtons = Array.from(document.querySelectorAll(".number"));
+    numberButtons.forEach(numberButton => {
+        numberButton.addEventListener("click", enterNumbers);
+    });
+
+    let operatorButtons = Array.from(document.querySelectorAll(".operator"));
+    operatorButtons.forEach(operatorButton => {
+        operatorButton.addEventListener("click", operate);
+    });
+
+    const ACbutton = document.querySelector('#AC');  // AC button will clear the result screen so screen will be empty, not even 0
+    ACbutton.addEventListener("click", () => {
+        firstNo = null;
+        secondNo = null;
+        result = null;
+        operator = null;
+        resultScreen.innerHTML = "&nbsp;";
+    })
+
+    const clearBtn = document.querySelector('#clear');  // clearBtn will clear result value to null but display 0 in resultScreen though refreshResultScreen()
+    clearBtn.addEventListener("click", () => {
+        displayValue = null;
+        firstNo = null;
+        secondNo = null;
+        result = null;
+        operator = null;
+        refreshResultScreen();
+    })
+
+    const equals = function () {
+        if (firstNo == null && secondNo == null) {  // user has not entered anything then dont do anything
+            return;
+        }
+        else if (firstNo != null && secondNo != null && operator != null) {
+           displayValue = simpleOperate();
+           firstNo = displayValue;
+           secondNo = null;
+           operator = null;
+           refreshResultScreen();
+
+        }
+        else{
+            displayValue = firstNo;
+            operator = null;
+            refreshResultScreen();
+        }
+    }
+
+    const equalBtn = document.querySelector('#equals');
+    equalBtn.addEventListener("click", equals)
+
+
+
+</script>
 
 </html>
