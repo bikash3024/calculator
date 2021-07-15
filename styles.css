@@ -16,9 +16,9 @@
 
 
         :root {
-            --btn-background: rgb(133, 133, 133);
+            --btn-background: rgb(21 20 20);
             --body-background: rgb(116, 116, 116);
-            --calculator-background: rgb(22, 22, 22);
+            --calculator-background: rgb(58 56 56);
             --result-background: rgb(146, 146, 146);
         }
 
@@ -58,12 +58,20 @@
             grid-gap: 10px 10px;
             grid-template-columns: repeat(4, 1fr);
         }
+        .btn:hover{
+            background: var(--body-background);
+            color:#ffffff;
+            transform: translateX(0.2rem);
+            transform: translateY(-0.2rem);
+        }
 
         .btn {
             border-radius: 50%;
             background-color: var(--btn-background);
             color: #fff;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
 
         }
         .equalBtn{
